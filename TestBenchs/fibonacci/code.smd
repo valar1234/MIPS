@@ -1,0 +1,44 @@
+ori $t0, $zero, 0
+ori $t1, $zero, 1
+ori $t2, $zero, 0
+ori $t3, $zero, 40
+LOOP:
+add $s0, $t0, $t1	#s0 = t0 + t1
+addi $t0, $t1, 0	#t0 = t1
+addi $t1, $s0, 0	#t1 = s0
+sw $s0, 0($t2)		#[$t2] = $s0
+addi $t2, $t2, 4	#$t2 = $t2 + 4
+bne $t3, $t2, LOOP
+j CLEAR
+#accumulate all the values
+CLEAR:
+ori $t1, $zero, 0
+ori $t2, $zero, 0
+ori $s0, $zero, 0
+ACCM:
+lw $t1, 0($t2)		#load $t1 = [$t2]
+add $s0, $s0, $t1	#$s0 = $s0 + $t1
+addi $t2, $t2, 4
+beq $t3, $t2, DONE
+j ACCM
+#store the result
+DONE:
+sw $s0, 44($zero)
+ori $t1, $zero, 1
+sllv $s1, $s0, $t1	#s1 = s0 << t1
+sw $s1, 48($zero) 
+ori $t1, $zero, 2
+srlv $s2, $s0, $t1	#s2 = s0 >> t1
+sw $s2, 52($zero) 
+
+##to flush the cache
+lw $t0, 2048($zero)
+lw $t1, 2080($zero)
+nop
+nop
+nop
+
+
+
+
+

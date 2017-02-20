@@ -1,0 +1,29 @@
+#the cache example to calculate the DIV
+main:
+lw $a0, 0($zero)
+lw $a1, 4($zero)
+jal DIV
+#to flush the cache to write back the saved data
+lw $t0, 2048($zero)
+lw $t1, 2080($zero)
+nop
+nop
+nop
+j main
+
+###the function of DIV
+DIV:
+addi $v0, $zero, 0
+addi $v1, $zero, 0
+addi $t0, $a0, 0
+DIV_START:
+slt $t1, $t0, $a1
+bne $t1, $zero, DIV_DONE
+sub $t0, $t0, $a1
+addi $v0, $v0, 1
+j DIV_START
+DIV_DONE:
+addi $v1, $t0, 0
+sw $v0, 32($zero)
+sw $v1, 36($zero)
+jr $ra		#return the function

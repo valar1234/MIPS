@@ -1,0 +1,26 @@
+addi $t0, $zero, 2010
+addi $t1, $zero, 18910
+addi $t4, $zero, 0
+SORT:
+slt $s0, $t0, $t1
+beq $s0, $zero, SWAP
+j GCD
+SWAP:
+addi $t2, $t0, 0
+addi $t0, $t1, 0
+addi $t1, $t2, 0
+j GCD
+GCD:
+sw $t1, 0($t4)
+addi $t4, $t4, 4
+beq $t0, $zero, DONE
+sub $t1, $t1, $t0
+j SORT
+DONE:
+sw $t1, 0($t4)
+lw $t0, 2048($zero)
+lw $t0, 2080($zero)
+lw $t0, 2112($zero)
+nop
+nop
+nop

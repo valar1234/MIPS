@@ -1,0 +1,47 @@
+MAIN:
+ori $s0, $zero, 40
+ori $s1, $zero, 0
+ori $s2, $zero, 0
+ori $s3, $zero, 12
+NEXT:
+slt $t0, $s1, $s0
+bne $t0, $zero, PROCESS
+j MDONE
+PROCESS:
+sub $a0, $s3, $s1
+addi $s1, $s1, 1
+jal FUNC
+sw $v0, 0($s2)
+addi $s2, $s2, 4
+j NEXT
+
+
+
+FUNC:
+ori $t0, $a0, 0
+ori $t1, $zero, 10
+addi $t2, $zero, -10
+slt $t3, $t0, $t1
+beq $t3, $zero, FC
+slt $t3, $t0, $t2
+bne $t3, $zero, FA
+add $v0, $t0, $t0
+j DONE
+FC:
+ori $v0, $zero, 20
+j DONE
+FA:
+addi $v0, $zero, -20
+j DONE
+DONE:
+jr $ra
+
+MDONE:
+#flush cache
+lw $t0, 2048($zero)
+lw $t0, 2080($zero)
+lw $t0, 2112($zero)
+lw $t0, 2144($zero)
+nop
+nop
+nop

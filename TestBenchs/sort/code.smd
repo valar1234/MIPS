@@ -1,0 +1,62 @@
+MAIN:
+#s0 => the start address
+#s1 => the number of sorting data
+#s2 => the store address
+ori $s0, $zero, 0
+ori $s1, $zero, 20
+ori $s2, $zero, 128
+#t8 => the counter
+ori $t8, $zero, 0
+SORTSTART:
+slt $t0, $t8, $s1
+beq $t0, $zero, SORTDONE
+#cal the FINDMAX function
+ori $a0, $s0, 0
+ori $a1, $s1, 0
+jal FINDMAX
+sw $v0, 0($s2)
+sw $zero, 0($v1)
+addi $t8, $t8, 1
+addi $s2, $s2, 4
+j SORTSTART
+
+
+#the function to find the maximum
+FINDMAX:
+#$a0 =>the start address
+#a1 => the number
+#t0 => the maximum
+#t4 => the maximum index
+#t1 => the counter
+#t5 => the tmp address
+ori $t0, $zero, 0
+ori $t1, $zero, 0
+ori $t5, $a0, 0
+FINDSTART:
+sub $t2, $t1, $a1
+beq $t2, $zero, FINDDONE
+#compare the data
+lw $t3, 0($t5)
+slt $t2, $t0, $t3
+bne $t2, $zero, SWAP
+j UPDATE
+SWAP:
+ori $t0, $t3, 0
+ori $t4, $t5, 0
+UPDATE:
+addi $t1, $t1, 1
+addi $t5, $t5, 4
+j FINDSTART
+FINDDONE:
+ori $v0, $t0, 0
+ori $v1, $t4, 0
+jr $ra
+
+SORTDONE:
+#flush the cache
+lw $t0, 2176($zero)
+lw $t0, 2208($zero)
+lw $t0, 2240($zero)
+nop
+nop
+nop

@@ -1,0 +1,15 @@
+main:
+ori $t1, $zero, 0
+ori $t2, $zero, 0
+ori $t3, $zero, 40
+first:
+addi $t2, $t2, 4
+add $t1, $t1, $t2
+bne $t2, $t3, save
+ori $t2, $zero, 0
+j	done
+save:
+sw $t1, 0($t2)
+j	first
+done:
+ori $t2, $zero, 0

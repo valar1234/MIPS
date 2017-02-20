@@ -1,0 +1,25 @@
+main:
+ori $a0, $zero, 30
+ori $t0, $zero, 0
+ori $s0, $zero, 0
+start:
+bne $t0, $a0, NEXT
+j DONE
+
+NEXT:
+addi $t0, $t0, 1
+sw $t0, 0($s0)
+addi $s0, $s0, 4
+j start
+
+DONE:
+addi $t0, $t0, 1
+sw $t0, 0($s0)
+#flush the cache
+lw $t0, 2048($zero)
+lw $t0, 2080($zero)
+lw $t0, 2112($zero)
+lw $t0, 2144($zero)
+nop
+nop
+nop

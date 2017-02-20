@@ -1,0 +1,57 @@
+main:
+##the add operation
+addi $a0, $zero, 76
+addi $a1, $zero, 129
+addi $a2, $zero, 0
+jal ADD
+
+##the div operation
+addi $a0, $zero, 4
+addi $a1, $zero, 15
+addi $a2, $zero, 16
+jal DIV		#call the DIV function
+
+##the div operation
+addi $a0, $zero, 3463
+addi $a1, $zero, 27
+addi $a2, $zero, 36
+jal DIV		#call the DIV function
+
+j DONE
+
+
+
+###the function of DIV
+DIV:
+addi $v0, $zero, 0
+addi $v1, $zero, 0
+addi $t0, $a0, 0
+DIV_START:
+slt $t1, $t0, $a1
+bne $t1, $zero, DIV_DONE
+sub $t0, $t0, $a1
+addi $v0, $v0, 1
+j DIV_START
+DIV_DONE:
+addi $v1, $t0, 0
+sw $a0, 0($a2)
+sw $a1, 4($a2)
+sw $v0, 8($a2)
+sw $v1, 12($a2)
+jr $ra		#return the function
+
+ADD:
+add $t0, $a0, $a1
+sw $a0, 0($a2)
+sw $a1, 4($a2)
+sw $t0, 8($a2)
+jr $ra
+
+DONE:
+## to flush the cache
+lw $t0, 2048($zero)
+lw $t0, 2080($zero)
+ori $zero, $zero, 0
+nop
+nop
+nop

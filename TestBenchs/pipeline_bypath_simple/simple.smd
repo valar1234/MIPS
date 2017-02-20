@@ -1,0 +1,22 @@
+nop
+nop
+addi $t0, $zero, 77
+addi $t1, $zero, 23
+sub $t2, $t0, $t1
+add $t3, $t2, $t0
+sub $t4, $t2, $t0
+add $t5, $t2, $t1
+sub $t5, $t5, $t3
+sw $t0, 0($zero)
+sw $t1, 4($zero)
+sw $t2, 8($zero)
+sw $t3, 12($zero)
+sw $t4, 16($zero)
+sw $t5, 20($zero)
+lw $s0, 12($zero)
+lw $s1, 20($zero)
+add $s2, $s0, $s1
+sw $s2, 24($zero)
+nop
+nop
+nop

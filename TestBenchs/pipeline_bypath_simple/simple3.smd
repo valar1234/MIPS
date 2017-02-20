@@ -1,0 +1,15 @@
+nop
+nop
+addi $t1, $zero, 99
+addi $t2, $zero, -22
+sw $t1, 0($zero)
+sw $t2, 4($zero)
+lw $s0, 0($zero)
+addi $s0, $s0, -7
+lw $s1, 4($zero)
+add $s2, $s0, $s1
+sw $s2, 8($zero)
+sw $s3, 12($zero)
+nop
+nop
+nop

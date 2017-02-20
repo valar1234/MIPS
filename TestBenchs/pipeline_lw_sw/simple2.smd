@@ -1,0 +1,15 @@
+main:
+lw $t0, 0($zero)
+bne $t0, $zero, NEXT
+addi $s0, $zero, -3
+j DONE
+
+NEXT:
+addi $s0, $zero, -1
+
+DONE:
+sw $s0, 4($zero)
+lw $t0, 2048($zero)
+nop
+nop
+nop

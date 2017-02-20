@@ -1,0 +1,73 @@
+MAIN:
+addi $s0, $zero, 20
+addi $s3, $zero, 0
+addi $s4, $zero, 0
+##set the stack address
+ori $sp, $zero, 128
+ori $s1, $zero, 0
+ori $fp, $zero, 256
+ori $s2, $zero, 0
+START:
+beq $s3, $s0, SORTDONE
+lw $a0, 0($s4)
+jal SORT
+addi $s3, $s3, 1
+addi $s4, $s4, 4
+j START
+
+SORTDONE:
+#flush the cache
+lw $t0, 2176($zero)
+lw $t0, 2208($zero)
+lw $t0, 2240($zero)
+nop
+nop
+nop
+
+
+SORT:
+#pass the parameter
+ori $t0, $a0, 0
+COMPARE:
+beq $s1, $zero, EMPTY
+#pop a element
+addi $sp, $sp, -4
+addi $s1, $s1, -1
+lw $t1, 0($sp)
+#compare
+slt $t2, $t0, $t1
+bne $t2, $zero, OVER
+#if $t0 > $t1, push $t1 to second stack
+sw $t1, 0($fp)
+addi $fp, $fp, 4
+addi $s2, $s2, 1
+j COMPARE
+
+OVER:
+#push the two element
+sw $t1, 0($sp)
+sw $t0, 4($sp)
+addi $sp, $sp, 8
+addi $s1, $s1, 2
+j COPY
+
+#when the stack is empty
+EMPTY:
+sw $t0, 0($sp)
+addi $sp, $sp, 4
+addi $s1, $s1, 1
+j COPY
+
+#copy stack2 to stack0
+COPY:
+beq $s2, $zero, DONE
+addi $fp, $fp, -4
+addi $s2, $s2, -1
+lw $t0, 0($fp)
+sw $t0, 0($sp)
+addi $sp, $sp, 4
+addi $s1, $s1, 1
+j COPY
+
+DONE:
+jr $ra

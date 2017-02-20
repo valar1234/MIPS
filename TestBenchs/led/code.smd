@@ -1,0 +1,33 @@
+MAIN:
+##initialize the value to 1
+addi $s0, $zero, 1
+sw $s0, 4($zero)
+addi $s1, $zero, 8
+addi $s2, $zero, 1
+jal DELAY_S
+START:
+lw $s3, 4($zero)
+beq $s3, $s1, MAIN
+sllv $s3, $s3, $s2
+sw $s3, 4($zero)
+jal DELAY_S
+j START
+
+# function of delay 1 second when clk = 50MHz
+# the total cycles is 50M/5=10M cycles = 10000 x 1000
+DELAY_S:
+ori $t1, $zero, 0
+ori $a0, $zero, 10000	#10000
+ori $a1, $zero, 1000	#1000
+DELAY_LOOP1:
+ori $t0, $zero, 0
+DELAY_LOOP2:
+addi $t0, $t0, 1
+bne $t0, $a0, DELAY_LOOP2
+addi $t1, $t1, 1
+bne $t1, $a1, DELAY_LOOP1
+jr $ra
+
+
+
+

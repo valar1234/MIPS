@@ -1,0 +1,40 @@
+main:
+ori $sp, $zero, 1024
+ori $fp, $zero, 256
+ori $a0, $zero, 20
+sw $a0, 0($zero)
+jal fact
+j DONE
+
+
+fact:
+addi $sp, $sp, -32
+sw $ra, 20($sp)
+sw $fp, 16($sp)
+addi $fp, $sp, 28
+sw $a0, 0($fp)
+lw $v0, 0($fp)
+bne $v0, $zero, NEXT2
+ori $v0, $zero, 0
+j NEXT1
+
+NEXT2:
+lw $v1, 0($fp)
+addi $v0, $v1, -1
+addi $a0, $v0, 0
+jal fact
+lw $v1, 0($fp)
+add $v0, $v0, $v1
+
+NEXT1:
+lw $ra, 20($sp)
+lw $fp, 16($sp)
+addi $sp, $sp, 32
+jr $ra
+
+DONE:
+sw $v0, 4($zero)
+lw $t0, 2048($zero)
+nop
+nop
+nop

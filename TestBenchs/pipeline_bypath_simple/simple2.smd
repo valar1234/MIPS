@@ -1,0 +1,18 @@
+nop
+nop
+addi $t0, $zero, 1
+addi $t1, $zero, 2
+addi $t2, $zero, 3
+addi $t3, $zero, 4
+add $t0, $t0, $t1
+add $s0, $s0, $t0
+add $s0, $s0, $t1
+add $s0, $s0, $t2
+add $s0, $s0, $t3
+sub $s1, $s0, $t3
+sw $s0, 0($zero)
+sw $s1, 4($zero)
+nop
+nop
+nop
+nop

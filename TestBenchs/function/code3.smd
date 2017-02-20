@@ -1,0 +1,61 @@
+main:
+ori $s0, $zero, 24
+ori $sp, $zero, 128
+ori $a0, $zero, 43
+addi $a1, $zero, -12
+ori $a2, $zero, 51
+sw $a0, 0($zero)
+sw $a1, 4($zero)
+sw $a2, 8($zero)
+#call ADD3
+jal ADD3
+#save and flush the result
+j OVER
+
+ADD2:
+#save the context
+sw $ra, 0($sp)
+addi $sp, $sp, 4
+#calculate
+add $v0, $a0, $a1
+sw $v0, 16($zero)
+#get the return address
+addi $sp, $sp, -4
+lw $ra, 0($sp)
+jr $ra
+
+SUB2:
+#save the context
+sw $ra, 0($sp)
+addi $sp, $sp, 4
+#calculate
+sub $v0, $a0, $a1
+sw $v0, 20($zero)
+#get the return address
+addi $sp, $sp, -4
+lw $ra, 0($sp)
+jr $ra
+
+
+ADD3:
+#save the context
+sw $ra, 0($sp)
+addi $sp, $sp, 4
+#calculate $a0 + $a1
+jal ADD2
+ori $a0, $v0, 0
+ori $a1, $a2, 0
+jal SUB2
+#get the return address
+addi $sp, $sp, -4
+sw $v0, 24($zero)
+lw $ra, 0($sp)
+jr $ra
+
+OVER:
+sw $v0, 12($zero)
+lw $t0, 2048($zero)
+nop
+nop
+nop
+

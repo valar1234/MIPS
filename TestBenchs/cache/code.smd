@@ -1,0 +1,10 @@
+lw $t0, 2220($zero)
+lw $t1, 4280($zero)
+sub $s0, $t1, $t0
+sw $s0, 2216($zero)
+lw $t0, 2220($zero)
+lw $t1, 2216($zero)
+lw $t2, 4268($zero)
+nop
+nop
+nop
