@@ -26,7 +26,7 @@
 ## Some testbenchs are providered. All the codes are assembled by "mipsasm.exe", which is a MIPS assembler and simulator.
 1 sort: use the search-maximum method to sort an array.
 
-2 stack_sort: use two stacl to sort an array.
+2 stack_sort: use two stacks to sort an array.
 
 3 finonacci: calculate the Fibonacci series.
 
