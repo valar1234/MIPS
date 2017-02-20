@@ -13,11 +13,15 @@
 4: A 2KB direct-mapped data-cache is added to accelerate memory access. This cache has 64 blocks and each block has 8 words. A cache controller is designed to connect the MIPS processor and the 64KB main memory. The cache is implemented as LUT in Xilinx FPGAs, and the main memory is implemented as Block Rams(BRAM).
 
 ## This MIPS processor supports the basic instruction as bellow:
-TYPE-R: AND, OR, ADD, SUB, SLT, NOR, SLRV, SLLV
-TYPE-I: ADDI, ANDI, ORI, XORI, LUI
-MEM: LW, SW
-BRANCH: BEQ, BNE
-JUMP: J, JAL, JR
+1 TYPE-R: AND, OR, ADD, SUB, SLT, NOR, SLRV, SLLV
+
+2 TYPE-I: ADDI, ANDI, ORI, XORI, LUI
+
+3 MEM: LW, SW
+
+4 BRANCH: BEQ, BNE
+
+5 JUMP: J, JAL, JR
 
 ## Some testbenchs are providered. All the codes are assembled by "mipsasm.exe", which is a MIPS assembler and simulator.
 1 sort: use the search-maximum method to sort an array.
