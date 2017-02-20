@@ -1,9 +1,9 @@
 # Classic-MIPS
-A classic 5-stage pipeline MIPS 32-bit processor, including a 2-bit branch predictor, a branch prediction buffer and a direct-mapped cache.
+## A classic 5-stage pipeline MIPS 32-bit processor, including a 2-bit branch predictor, a branch prediction buffer and a direct-mapped cache.
 
 ## This MIPS processor is coded according to the fifth edition book of David A.Patternson & John L.Hennsessy, "Computer Organization and Design". The architecture is the referred to the descriptions in this book.
 
-## This MIPS is fully evaluated on Xilinx Vivado designe tools and several testbench are providered to test the processor. It is also evaluated on Xilinx ZC706 board.
+## This MIPS is fully evaluated on Xilinx Vivado design tools and several testbenchs are providered to test the processor. It is also evaluated on Xilinx ZC706 board.
 1: Classic 5-stage pipeline, including FETCH, DECODE, EXECUTE, MEM and WB.
 
 2: Apply the Dynamic Branch Prediction technology to improve the branch accuracy. It contains a 2-bit branch predictor and a 1024 depth branch prediction buffer to predict the branch address. Furthermore, it takes the jump instruction(j, jal, jr .etc) as specital branch instructions to deal with, and this can simplfy the jump implementation.
