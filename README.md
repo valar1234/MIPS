@@ -34,5 +34,5 @@
 
 5 function/fact: test the function recursion. Accumulate the result in recursively way.
 
-## Any problems or bugs, please contact jfjin14@fudan.edu.cn.
+
 
