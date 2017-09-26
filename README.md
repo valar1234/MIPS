@@ -39,4 +39,3 @@ Some testbenchs are providered. All the codes are assembled by "mipsasm.exe", wh
 
 5 function/fact: test the function recursion. Accumulate the result in recursively way. 
 
-Any problems, please contant jfjin14@fudan.edu.cn.
