@@ -1,0 +1,88 @@
+# !usr/bin/python
+import numpy as np
+import time
+import sys
+if sys.version_info.major == 2:
+    import Tkinter as tk
+else:
+    import tkinter as tk
+
+# set the block SIZE
+POINT_SIZE  = 4
+SAMPLE_SIZE = 30
+BLOCK_SIZE  = 8    
+WIDTH_NUM   = 3
+HEIGHT_NUM  = 3
+
+BLOCK_LINE_WIDTH = 2
+SUB_BLOCK_LINE_WIDTH = 1
+
+class GUI(tk.Tk, object):
+    def __init__(self):
+        super(GUI, self).__init__()
+        self.title('maze')
+        self.geometry('{0}x{1}'.format(WIDTH_NUM * BLOCK_SIZE * SAMPLE_SIZE, HEIGHT_NUM * BLOCK_SIZE * SAMPLE_SIZE))
+        self._build_gui()
+    
+
+    def _build_gui(self):
+        self.canvas = tk.Canvas(self, bg='white',
+                           height=HEIGHT_NUM * BLOCK_SIZE * SAMPLE_SIZE,
+                           width=WIDTH_NUM * BLOCK_SIZE * SAMPLE_SIZE)
+
+        ## draw block one by one
+        for i in range(WIDTH_NUM):
+            block_x = i * 8 * SAMPLE_SIZE
+            for j in range(HEIGHT_NUM):
+                block_y = j * 8 * SAMPLE_SIZE
+                self._build_block(block_x, block_y)
+        # pack all
+        self.canvas.pack()
+
+    ## sample is 1x1
+    def _build_sample(self, sample_x, sample_y, color):
+        l_x = sample_x + SAMPLE_SIZE/2 - POINT_SIZE/3
+        r_x = sample_x + SAMPLE_SIZE/2 + POINT_SIZE/2
+        l_y = sample_y + SAMPLE_SIZE/2 - POINT_SIZE/2
+        r_y = sample_y + SAMPLE_SIZE/2 + POINT_SIZE/2
+        self.canvas.create_oval(l_x, l_y, r_x, r_y, fill = color)
+
+    ## quad is 2x2
+    def _build_quad(self, quad_x, quad_y):
+        self._build_sample(quad_x, quad_y, 'red')
+        self._build_sample(quad_x + SAMPLE_SIZE, quad_y, 'green')
+        self._build_sample(quad_x, quad_y + SAMPLE_SIZE, 'blue')
+        self._build_sample(quad_x + SAMPLE_SIZE, quad_y + SAMPLE_SIZE, 'yellow')
+    
+    ## sub_block is 4x4
+    def _build_sub_block(self, sub_b_x, sub_b_y):
+        if SAMPLE_SIZE >=  30:
+            quad_offset = 2 * SAMPLE_SIZE
+            self._build_quad(sub_b_x, sub_b_y)
+            self._build_quad(sub_b_x + quad_offset, sub_b_y)
+            self._build_quad(sub_b_x, sub_b_y + quad_offset)
+            self._build_quad(sub_b_x + quad_offset, sub_b_y + quad_offset)
+        else:
+            sub_b_offset = 4 * SAMPLE_SIZE
+            self.canvas.create_line(sub_b_x, sub_b_y, sub_b_x + sub_b_offset, sub_b_y, width = SUB_BLOCK_LINE_WIDTH)
+            self.canvas.create_line(sub_b_x, sub_b_y, sub_b_x, sub_b_y + sub_b_offset, width = SUB_BLOCK_LINE_WIDTH)
+            self.canvas.create_line(sub_b_x + sub_b_offset, sub_b_y + sub_b_offset, sub_b_x + sub_b_offset, sub_b_y, width = SUB_BLOCK_LINE_WIDTH)
+            self.canvas.create_line(sub_b_x + sub_b_offset, sub_b_y + sub_b_offset, sub_b_x, sub_b_y + sub_b_offset, width = SUB_BLOCK_LINE_WIDTH)  
+
+    ## block is 8x8
+    def _build_block(self, b_x, b_y):
+        sub_b_offset = 4 * SAMPLE_SIZE
+        self._build_sub_block(b_x, b_y)
+        self._build_sub_block(b_x + sub_b_offset, b_y)
+        self._build_sub_block(b_x, b_y + sub_b_offset)
+        self._build_sub_block(b_x + sub_b_offset, b_y + sub_b_offset)
+
+        b_offset = 8 * SAMPLE_SIZE
+        self.canvas.create_line(b_x, b_y, b_x + b_offset, b_y, width = BLOCK_LINE_WIDTH)
+        self.canvas.create_line(b_x, b_y, b_x, b_y + b_offset, width = BLOCK_LINE_WIDTH)
+        self.canvas.create_line(b_x + b_offset, b_y + b_offset, b_x + b_offset, b_y, width = BLOCK_LINE_WIDTH)
+        self.canvas.create_line(b_x + b_offset, b_y + b_offset, b_x, b_y + b_offset, width = BLOCK_LINE_WIDTH)
+
+if __name__ == '__main__':
+    env = GUI()
+    env.mainloop()
